@@ -1,7 +1,7 @@
 export const fetchAPI = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
-    return data.results;
+    return data;
 }
 export function getIDPokemon(url) {
     const parts = url.split('/'); 

@@ -1,10 +1,8 @@
-<script>
-    import PokemonList from "./components/PokemonList/PokemonList.vue"
-    export default {
-        components: {
-            PokemonList
-        }
-    }
+<script setup>
+import PokemonList from "./components/PokemonList/PokemonList.vue"
+import { ref } from "vue";
+
+const searchQuery = ref("");
 
 </script>
 
@@ -14,13 +12,11 @@
             <!--Title-->
             <div class="title">
                 <p class="title__main">Pokemon API</p>
-                <input class="title__input" type="text" placeholder="Search some Pokemon...">
+                <input class="title__input" v-model="searchQuery" type="text" placeholder="Search some Pokemon...">
             </div>
             <!--End Title-->
             
-            <PokemonList />
-
-            <button class="load-more">Load more</button>
+            <PokemonList :searchQuery="searchQuery"/>
         </div>
     </div>
 </template>
