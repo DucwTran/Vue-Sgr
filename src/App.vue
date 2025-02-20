@@ -1,14 +1,16 @@
 <script setup>
-import PokemonList from "./components/PokemonList/PokemonList.vue"
+import PokemonList from "./components/PokemonList/PokemonList.vue"    
+import PokemonDetail from "./components/PokemonDetail/PokemonDetail.vue"       
 import { ref } from "vue";
 
 const searchQuery = ref("");
-
+const selectedPokemon = ref(null);
+const isSelected = ref(false);
 </script>
 
 <template>
     <div class="root">
-        <div class="container">
+        <div class="container-list" v-if="!isSelected">
             <!--Title-->
             <div class="title">
                 <p class="title__main">Pokemon API</p>
@@ -16,8 +18,10 @@ const searchQuery = ref("");
             </div>
             <!--End Title-->
             
-            <PokemonList :searchQuery="searchQuery"/>
+            <PokemonList :searchQuery="searchQuery" v-model:isSelect="isSelected" v-model:selectedPokemon="selectedPokemon"/>
         </div>
+
+        <PokemonDetail v-if="isSelected" v-model:isSelect="isSelected"  :pokemon="selectedPokemon"/>
     </div>
 </template>
 
@@ -29,7 +33,7 @@ const searchQuery = ref("");
     font-family: "Inter", sans-serif;
 }
 
-.container{
+.container-list{
     margin: 0 auto;
     max-width: 1200px;
     display: flex;

@@ -1,17 +1,13 @@
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineEmits } from "vue";
 
-const props = defineProps({
-    loading: Boolean,
-});
 
-const emit = defineEmits(["load-more"]);
+const emit = defineEmits(["handleLoadMore"]);
 </script>
 
 <template>
     <button
         class="load-more"
-        @click="emit('load-more')"
-        v-if="!props.loading"
+        @click="emit('handleLoadMore')"
     >Load more</button>
 </template>
