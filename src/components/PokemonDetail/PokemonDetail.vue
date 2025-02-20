@@ -103,8 +103,8 @@ onMounted(() => {
                 <div class="detail__evolution-process">
                     <div v-for="(evo, index) in pokemon.evolution_chain" :key="evo.id" class="evolution-stage">
                         <div class="detail__evolution-item">
+                            <p class="detail__evo-name">{{ evo.name }}</p>
                             <img :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evo.id}.png`" :alt="evo.name">
-                            <p>{{ evo.name }}</p>
                         </div>
                         <span v-if="index < pokemon.evolution_chain.length - 1" class="arrow"> &gt; </span>
                     </div>
@@ -285,13 +285,32 @@ onMounted(() => {
 .spd2 {
     background-color: #fb94a8;
 }
+.detail__evolution{
+    width: 100%;
+}
 .detail__evolution-process{
     display: flex;
     width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 .evolution-stage{
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+.detail__evolution-item{
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.detail__evo-name{
+    color: #2c3e50;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+    text-transform: capitalize;
 }
 </style>
