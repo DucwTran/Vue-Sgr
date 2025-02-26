@@ -1,24 +1,36 @@
 <script setup>
-import { defineEmits, onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-const emit = defineEmits(["update:isSelect"]);
-defineProps({
-    pokemon: Object, // Nhận Pokémon từ App.vue
-    isSelect: Boolean,
-});
-
-const handleBack = () => {
-    emit("update:isSelect", false);
-};
+const route = useRoute(); // Dùng để lấy `id` từ URL
+const router = useRouter();
+const pokemon = ref(null);
 
 onMounted(() => {
-    window.scrollTo(0, 0); // Khi trang tải, tự động lên đầu
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const storedPokemon = localStorage.getItem("selectedPokemon");
+
+    if (storedPokemon) {
+        pokemon.value = JSON.parse(storedPokemon);
+    } else {
+        const storedPokemons = JSON.parse(localStorage.getItem("allPokemons") || "[]");
+        const foundPokemon = storedPokemons.find(p => p.id == route.params.id);
+
+        if (foundPokemon) {
+            pokemon.value = foundPokemon;
+        } else {
+            console.warn("No Pokémon found!");
+            router.push("/"); // Nếu không có, quay về trang chính
+        }
+    }
 });
+
 </script>
 
 <template>
-    <div class="container">
-        <div @click="handleBack" class="back"> &lt; Back</div>
+    <div class="container" v-if="pokemon">
+        <router-link to="/" class="back"> &lt; Back</router-link> 
         <div class="detail">
             <!-- Ảnh Pokémon -->
             <div 
@@ -127,7 +139,9 @@ onMounted(() => {
 }
 
 .back {
-    margin-left: 150px;
+    color: #000;
+    text-decoration: none;
+    transform:translateX(-500px);
     cursor: pointer;
     display: inline;
     width: 65px;
@@ -137,6 +151,9 @@ onMounted(() => {
     line-height: 24px;
     padding: 10px 20px;
     box-shadow: #63636333 0 4px 8px 0;
+    display: inline-flex; 
+    align-items: center; 
+    width: auto; 
 }
 
 .detail {
